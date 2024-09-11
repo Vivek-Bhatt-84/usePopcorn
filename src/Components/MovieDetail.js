@@ -13,6 +13,12 @@ export function MovieDetail({
   const [isLoading, setIsloading] = useState(false);
   const [userRating, setUserRating] = useState("");
 
+  const countRef = useRef(0);
+
+  useEffect(() => {
+   if(userRating) countRef.current += 1;
+  }, [userRating]);
+
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
 
   const {
@@ -37,6 +43,7 @@ export function MovieDetail({
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecisions : countRef.current,
     };
     onAddWatched(newWatchedMovie);
     onCloseMovie();
